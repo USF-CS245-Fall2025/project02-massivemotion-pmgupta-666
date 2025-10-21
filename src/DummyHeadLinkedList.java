@@ -1,6 +1,6 @@
 public class DummyHeadLinkedList<T> implements List<T> {
     private static class Node<T> { T v; Node<T> next; Node(){} Node(T v){ this.v = v; } }
-    private final Node<T> head = new Node<>(); // dummy
+    private final Node<T> head = new Node<>();
     private int size;
 
     @Override public int size(){ return size; }

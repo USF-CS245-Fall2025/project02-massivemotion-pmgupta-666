@@ -6,29 +6,18 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.Random;
 
-/**
- * CS 245 - Project 2: Massive / Motion (starter-integrated)
- * - Reads a property file passed as arg[0]
- * - Creates one List realization (arraylist | single | double | dummyhead)
- * - First body is a red star; subsequent are comets spawned from edges by probability
- * - Updates via Swing Timer; removes bodies off-canvas
- */
 public class MassiveMotion extends JPanel implements ActionListener {
 
     protected Timer tm;
-
-    // Config
     private int windowX, windowY, timerDelay;
     private String listKind;
     private int starPosX, starPosY, starSize, starVx, starVy;
     private double genXProb, genYProb;
     private int bodySize, bodyVelocity;
 
-    // State
     private final Random rng = new Random();
     private List<CelestialBody> bodies;
 
-    // Construct with a properties file
     public MassiveMotion(String propFile) {
         Properties props = new Properties();
         try (FileInputStream fis = new FileInputStream(propFile)) {
@@ -37,7 +26,6 @@ public class MassiveMotion extends JPanel implements ActionListener {
             System.err.println("Could not read properties file, using defaults.");
         }
 
-        // Load config (defaults per spec)
         timerDelay = getInt(props, "timer_delay", 75);
         listKind   = props.getProperty("list", "arraylist");
 
@@ -55,17 +43,13 @@ public class MassiveMotion extends JPanel implements ActionListener {
         bodySize   = getInt(props, "body_size", 10);
         bodyVelocity = getInt(props, "body_velocity", 3);
 
-        // List realization (polymorphism)
         bodies = ListFactory.make(listKind);
 
-        // First body is the star
         bodies.add(new CelestialBody(starPosX, starPosY, starVx, starVy, starSize, true));
 
-        // UI
         setPreferredSize(new Dimension(windowX, windowY));
         setBackground(Color.BLACK);
 
-        // Timer
         tm = new Timer(timerDelay, this);
     }
 
@@ -88,26 +72,23 @@ public class MassiveMotion extends JPanel implements ActionListener {
             bodies.get(i).draw(g2);
         }
         g2.dispose();
-        tm.start(); // keep as starter suggested
+        tm.start();
     }
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        // Spawn on X-frontier (top/bottom) and Y-frontier (left/right) per probability
         if (rng.nextDouble() < genXProb) spawnTopOrBottom();
         if (rng.nextDouble() < genYProb) spawnLeftOrRight();
 
-        // Move all
         for (int i = 0; i < bodies.size(); i++) bodies.get(i).move();
 
-        // Remove off-canvas (iterate backwards)
         for (int i = bodies.size() - 1; i >= 0; i--) {
             if (bodies.get(i).isOutOfBounds(windowX, windowY)) {
                 bodies.remove(i);
             }
         }
 
-        repaint(); // trigger paint
+        repaint();
     }
 
     private void spawnTopOrBottom() {
@@ -129,7 +110,7 @@ public class MassiveMotion extends JPanel implements ActionListener {
     private int nonZeroRand(int bound) {
         if (bound <= 0) return 0;
         int v = 0;
-        while (v == 0) v = rng.nextInt(bound * 2 + 1) - bound; // [-b..b] excluding 0
+        while (v == 0) v = rng.nextInt(bound * 2 + 1) - bound;
         return v;
     }
 
