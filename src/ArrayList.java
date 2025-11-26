@@ -1,46 +1,35 @@
 public class ArrayList<T> implements List<T> {
-    private Object[] data = new Object[10];
-    private int size = 0;
+    private Object[] data;
+    private int size;
 
-    @Override
-    public int size() { return size; }
-
-    @Override
-    public boolean add(T element) {
-        ensure(size + 1);
-        data[size++] = element;
-        return true;
+    public ArrayList() {
+        data = new Object[10];
+        size = 0;
     }
 
-    @Override
-    public void add(int index, T element) {
-        if (index < 0 || index > size) throw new IndexOutOfBoundsException();
-        ensure(size + 1);
-        System.arraycopy(data, index, data, index + 1, size - index);
-        data[index] = element;
-        size++;
+    public void add(T item) {
+        if (size == data.length) {
+            Object[] newArr = new Object[data.length * 2];
+            System.arraycopy(data, 0, newArr, 0, data.length);
+            data = newArr;
+        }
+        data[size++] = item;
     }
 
-    @Override @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     public T get(int index) {
-        if (index < 0 || index >= size) throw new IndexOutOfBoundsException();
         return (T) data[index];
     }
 
-    @Override @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     public T remove(int index) {
-        if (index < 0 || index >= size) throw new IndexOutOfBoundsException();
-        T old = (T) data[index];
-        System.arraycopy(data, index + 1, data, index, size - index - 1);
-        data[--size] = null;
-        return old;
+        T removed = (T) data[index];
+        for (int i = index; i < size - 1; i++) data[i] = data[i + 1];
+        size--;
+        return removed;
     }
 
-    private void ensure(int minCap) {
-        if (minCap <= data.length) return;
-        int newCap = Math.max(minCap, data.length * 2);
-        Object[] n = new Object[newCap];
-        System.arraycopy(data, 0, n, 0, size);
-        data = n;
+    public int size() {
+        return size;
     }
 }
