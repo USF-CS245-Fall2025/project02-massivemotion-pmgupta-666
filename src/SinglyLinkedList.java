@@ -20,10 +20,32 @@ public class SinglyLinkedList<T> implements List<T> {
         size++;
     }
 
+    public void add(int index, T item) {
+        if (index < 0 || index > size) throw new IndexOutOfBoundsException();
+
+        Node n = new Node(item);
+
+        if (index == 0) {
+            n.next = head;
+            head = n;
+            size++;
+            return;
+        }
+
+        Node curr = head;
+        for (int i = 0; i < index - 1; i++) curr = curr.next;
+
+        n.next = curr.next;
+        curr.next = n;
+        size++;
+        if (index < 0 || index > size) throw new IndexOutOfBoundsException();
+    }
+
     public T get(int index) {
         Node curr = head;
         for (int i = 0; i < index; i++) curr = curr.next;
         return curr.value;
+        if (index < 0 || index >= size) throw new IndexOutOfBoundsException();
     }
 
     public T remove(int index) {
@@ -39,6 +61,7 @@ public class SinglyLinkedList<T> implements List<T> {
         curr.next = curr.next.next;
         size--;
         return val;
+        if (index < 0 || index >= size) throw new IndexOutOfBoundsException();
     }
 
     public int size() {

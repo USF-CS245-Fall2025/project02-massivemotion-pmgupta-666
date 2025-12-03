@@ -21,6 +21,17 @@ public class DummyHeadLinkedList<T> implements List<T> {
         curr.next = new Node(item);
         size++;
     }
+    public void add(int index, T item) {
+        if (index < 0 || index > size) throw new IndexOutOfBoundsException();
+
+        Node curr = head;
+        for (int i = 0; i < index; i++) curr = curr.next;
+
+        Node n = new Node(item);
+        n.next = curr.next;
+        curr.next = n;
+        size++;
+    }
 
     public T get(int index) {
         Node curr = head.next;

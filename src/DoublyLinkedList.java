@@ -21,10 +21,50 @@ public class DoublyLinkedList<T> implements List<T> {
         size++;
     }
 
+    public void add(int index, T item) {
+        if (index < 0 || index > size) throw new IndexOutOfBoundsException();
+
+        Node n = new Node(item);
+
+        if (index == 0) {
+            if (head == null) {
+                head = tail = n;
+            } else {
+                n.next = head;
+                head.prev = n;
+                head = n;
+            }
+            size++;
+            return;
+        }
+
+        if (index == size) {
+            tail.next = n;
+            n.prev = tail;
+            tail = n;
+            size++;
+            return;
+        }
+
+        Node curr = head;
+        for (int i = 0; i < index; i++) curr = curr.next;
+
+        Node p = curr.prev;
+
+        p.next = n;
+        n.prev = p;
+        n.next = curr;
+        curr.prev = n;
+
+        size++;
+    }
+
+
     public T get(int index) {
         Node curr = head;
         for (int i = 0; i < index; i++) curr = curr.next;
         return curr.value;
+        if (index < 0 || index >= size) throw new IndexOutOfBoundsException();
     }
 
     public T remove(int index) {
@@ -44,6 +84,7 @@ public class DoublyLinkedList<T> implements List<T> {
         if (curr == tail) tail = curr.prev;
         size--;
         return val;
+        if (index < 0 || index >= size) throw new IndexOutOfBoundsException();
     }
 
     public int size() {
