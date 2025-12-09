@@ -9,6 +9,7 @@ public class SinglyLinkedList<T> implements List<T> {
     private Node head;
     private int size;
 
+    @Override
     public void add(T item) {
         Node n = new Node(item);
         if (head == null) head = n;
@@ -20,6 +21,7 @@ public class SinglyLinkedList<T> implements List<T> {
         size++;
     }
 
+    @Override
     public void add(int index, T item) {
         if (index < 0 || index > size) throw new IndexOutOfBoundsException();
 
@@ -38,16 +40,20 @@ public class SinglyLinkedList<T> implements List<T> {
         n.next = curr.next;
         curr.next = n;
         size++;
+
         if (index < 0 || index > size) throw new IndexOutOfBoundsException();
     }
 
+    @Override
     public T get(int index) {
         Node curr = head;
         for (int i = 0; i < index; i++) curr = curr.next;
         return curr.value;
+
         if (index < 0 || index >= size) throw new IndexOutOfBoundsException();
     }
 
+    @Override
     public T remove(int index) {
         if (index == 0) {
             T val = head.value;
@@ -55,15 +61,19 @@ public class SinglyLinkedList<T> implements List<T> {
             size--;
             return val;
         }
+
         Node curr = head;
         for (int i = 0; i < index - 1; i++) curr = curr.next;
+
         T val = curr.next.value;
         curr.next = curr.next.next;
         size--;
         return val;
+
         if (index < 0 || index >= size) throw new IndexOutOfBoundsException();
     }
 
+    @Override
     public int size() {
         return size;
     }

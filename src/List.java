@@ -1,4 +1,4 @@
-/**
+/*
  * A simple list interface with the basic operations we need
  * for the Massive Motion project.
  *
@@ -6,14 +6,14 @@
  */
 public interface List<T> {
 
-    /**
+    /*
      * Adds an element to the end of the list.
      *
      * @param item element to add
      */
     void add(T item);
 
-    /**
+    /*
      * Inserts an element at a specific position in the list.
      * Shifts elements to the right when needed.
      *
@@ -23,7 +23,7 @@ public interface List<T> {
      */
     void add(int index, T item);
 
-    /**
+    /*
      * Returns the element at the given index.
      *
      * @param index element position
@@ -32,7 +32,7 @@ public interface List<T> {
      */
     T get(int index);
 
-    /**
+    /*
      * Removes and returns the element at the given index.
      *
      * @param index element position
@@ -41,7 +41,7 @@ public interface List<T> {
      */
     T remove(int index);
 
-    /**
+    /*
      * Returns how many elements are currently in the list.
      *
      * @return list size

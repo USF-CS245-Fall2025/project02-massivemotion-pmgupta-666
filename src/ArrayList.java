@@ -1,4 +1,4 @@
-/**
+/*
  * A basic dynamic array implementation for the List interface.
  * Grows automatically when it runs out of space.
  */
@@ -12,6 +12,7 @@ public class ArrayList<T> implements List<T> {
     }
 
     /** {@inheritDoc} */
+    @Override
     public void add(T item) {
         if (size == data.length) {
             Object[] newArr = new Object[data.length * 2];
@@ -21,8 +22,8 @@ public class ArrayList<T> implements List<T> {
         data[size++] = item;
     }
 
-    
     /** {@inheritDoc} */
+    @Override
     public void add(int index, T item) {
 
         if (size == data.length) {
@@ -41,9 +42,9 @@ public class ArrayList<T> implements List<T> {
         if (index < 0 || index > size) throw new IndexOutOfBoundsException();
     }
 
-
     @SuppressWarnings("unchecked")
     /** {@inheritDoc} */
+    @Override
     public T get(int index) {
         return (T) data[index];
         if (index < 0 || index >= size) throw new IndexOutOfBoundsException();
@@ -51,6 +52,7 @@ public class ArrayList<T> implements List<T> {
 
     @SuppressWarnings("unchecked")
     /** {@inheritDoc} */
+    @Override
     public T remove(int index) {
         T removed = (T) data[index];
         for (int i = index; i < size - 1; i++) data[i] = data[i + 1];
@@ -59,6 +61,7 @@ public class ArrayList<T> implements List<T> {
         if (index < 0 || index >= size) throw new IndexOutOfBoundsException();
     }
 
+    @Override
     public int size() {
         return size;
     }

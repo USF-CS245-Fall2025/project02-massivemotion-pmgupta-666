@@ -15,12 +15,15 @@ public class DummyHeadLinkedList<T> implements List<T> {
         size = 0;
     }
 
+    @Override
     public void add(T item) {
         Node curr = head;
         while (curr.next != null) curr = curr.next;
         curr.next = new Node(item);
         size++;
     }
+
+    @Override
     public void add(int index, T item) {
         if (index < 0 || index > size) throw new IndexOutOfBoundsException();
 
@@ -33,12 +36,14 @@ public class DummyHeadLinkedList<T> implements List<T> {
         size++;
     }
 
+    @Override
     public T get(int index) {
         Node curr = head.next;
         for (int i = 0; i < index; i++) curr = curr.next;
         return curr.value;
     }
 
+    @Override
     public T remove(int index) {
         Node curr = head;
         for (int i = 0; i < index; i++) curr = curr.next;
@@ -48,6 +53,7 @@ public class DummyHeadLinkedList<T> implements List<T> {
         return val;
     }
 
+    @Override
     public int size() {
         return size;
     }
